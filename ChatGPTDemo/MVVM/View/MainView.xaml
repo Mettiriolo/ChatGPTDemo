@@ -1,0 +1,64 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="ChatGPTDemo.MVVM.View.MainView"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:m="clr-namespace:ChatGPTDemo.MVVM.Models"
+    xmlns:vm="clr-namespace:ChatGPTDemo.MVVM.ViewModel">
+    <ContentPage.BindingContext>
+        <vm:MainViewModel />
+    </ContentPage.BindingContext>
+    <Grid RowDefinitions="*,50">
+        <ScrollView>
+            <CollectionView Margin="10" ItemsSource="{Binding History}">
+                <CollectionView.ItemsLayout>
+                    <LinearItemsLayout ItemSpacing="10" Orientation="Vertical" />
+                </CollectionView.ItemsLayout>
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <VerticalStackLayout>
+                            <VerticalStackLayout.HorizontalOptions>
+                                <MultiBinding Converter="{StaticResource FromUserToHorizontalOptionConverter}">
+                                    <Binding Path="User" />
+                                </MultiBinding>
+                            </VerticalStackLayout.HorizontalOptions>
+                            <Frame
+                                x:Name="Frame"
+                                Padding="10,6,10,6"
+                                CornerRadius="10">
+                                <Frame.BackgroundColor>
+                                    <MultiBinding Converter="{StaticResource FromUserToBackgroudColorConverter}">
+                                        <Binding Path="User" />
+                                    </MultiBinding>
+                                </Frame.BackgroundColor>
+                                <Label
+                                    x:Name="Editor"
+                                    FontSize="12"
+                                    Text="{Binding Text}"
+                                    TextColor="Black" />
+                                <!--<control:MarkdownGraphicsView
+                                        BindingContext="{Binding Source={x:Reference Editor}}"
+                                        FontColor="Black"
+                                        FontSize="12"
+                                        Text="{Binding Text}" />-->
+                            </Frame>
+                        </VerticalStackLayout>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </ScrollView>
+        <Grid Grid.Row="1" ColumnDefinitions="*,100">
+            <Entry
+                Placeholder="Send a Message..."
+                Text="{Binding Message.Text}"
+                VerticalOptions="CenterAndExpand" />
+            <Button
+                Grid.Column="1"
+                Command="{Binding SendCommand}"
+                HorizontalOptions="Center"
+                Text="Send"
+                VerticalOptions="Center" />
+        </Grid>
+    </Grid>
+
+</ContentPage>
