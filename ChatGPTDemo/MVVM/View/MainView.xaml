@@ -59,6 +59,11 @@
                 Text="Send"
                 VerticalOptions="Center" />
         </Grid>
+        <ActivityIndicator
+            x:Name="activityIndicator"
+            IsRunning="True"
+            IsVisible="False"
+            VerticalOptions="Center" />
     </Grid>
 
 </ContentPage>
